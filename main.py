@@ -59,7 +59,7 @@ class ListaEncadeada:
             novo_no.proximo = anterior.proximo
             anterior.proximo = novo_no
 
-        self.tamanho += 1  # <-- MELHORIA 1: Atualiza o tamanho
+        self.tamanho += 1  
         return True
 
     def remover(self, posicao):
@@ -74,7 +74,7 @@ class ListaEncadeada:
             no_a_remover = anterior.proximo
             anterior.proximo = no_a_remover.proximo
 
-        self.tamanho -= 1  # <-- MELHORIA 1: Atualiza o tamanho
+        self.tamanho -= 1  
         return True
 
   
@@ -104,7 +104,7 @@ class ListaEncadeada:
 
     def carregar_de_arquivo(self, nome_arquivo="lista.txt"):
         self.inicio = None
-        self.tamanho = 0  # <-- MELHORIA 1: Reseta o tamanho ao carregar
+        self.tamanho = 0  
         if not os.path.exists(nome_arquivo):
             return
         with open(nome_arquivo, "r") as f:
@@ -155,7 +155,7 @@ def menu():
     while True:
         limpar_tela()
         print("--- MENU DA LISTA ENCADEADA (VERSÃO OTIMIZADA) ---")
-        print(f"Estado Atual: {lista}\n")  # <-- MELHORIA 3: Usando print(lista)
+        print(f"Estado Atual: {lista}\n") 
         print("1. Verificar se a lista está vazia")
         print("2. Obter tamanho da lista")
         print("3. Obter valor de uma posição")
