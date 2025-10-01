@@ -21,7 +21,7 @@ class ListaEncadeada:
     def tamanho(self):
         return self.tamanho 
 
-    # <-- MELHORIA 2: Lógica de acesso centralizada em um método auxiliar
+    
     def _obter_no_na_posicao(self, posicao):
         """Método auxiliar para encontrar um nó em uma posição."""
         if not (1 <= posicao <= self.tamanho):
