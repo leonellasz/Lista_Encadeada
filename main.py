@@ -14,15 +14,15 @@ class No:
 class ListaEncadeada:
     def __init__(self):
         self.inicio = None
-        self.tamanho = 0  # <-- MELHORIA 1: Adicionado atributo de tamanho para performance O(1)
+        self.tamanho = 0  
 
     def esta_vazia(self):
         return self.tamanho == 0
 
     def tamanho(self):
-        return self.tamanho  # <-- MELHORIA 1: Agora é instantâneo (O(1))
+        return self.tamanho 
 
-    # <-- MELHORIA 2: Lógica de acesso centralizada em um método auxiliar
+    
     def _obter_no_na_posicao(self, posicao):
         """Método auxiliar para encontrar um nó em uma posição."""
         if not (1 <= posicao <= self.tamanho):
@@ -34,13 +34,13 @@ class ListaEncadeada:
         return atual
 
     def obter_elemento(self, posicao):
-        no = self._obter_no_na_posicao(posicao)  # <-- MELHORIA 2: Usa o método auxiliar
+        no = self._obter_no_na_posicao(posicao)  
         if no:
             return no.valor
         return None
 
     def modificar_elemento(self, posicao, novo_valor):
-        no = self._obter_no_na_posicao(posicao)  # <-- MELHORIA 2: Usa o método auxiliar
+        no = self._obter_no_na_posicao(posicao)  
         if no:
             no.valor = novo_valor
             return True
@@ -55,12 +55,12 @@ class ListaEncadeada:
             novo_no.proximo = self.inicio
             self.inicio = novo_no
         else:
-            # <-- MELHORIA 2: Usa o método auxiliar para encontrar o nó anterior
+            
             anterior = self._obter_no_na_posicao(posicao - 1)
             novo_no.proximo = anterior.proximo
             anterior.proximo = novo_no
 
-        self.tamanho += 1  # <-- MELHORIA 1: Atualiza o tamanho
+        self.tamanho += 1  
         return True
 
     def remover(self, posicao):
@@ -70,15 +70,15 @@ class ListaEncadeada:
         if posicao == 1:
             self.inicio = self.inicio.proximo
         else:
-            # <-- MELHORIA 2: Usa o método auxiliar para encontrar o nó anterior
+            
             anterior = self._obter_no_na_posicao(posicao - 1)
             no_a_remover = anterior.proximo
             anterior.proximo = no_a_remover.proximo
 
-        self.tamanho -= 1  # <-- MELHORIA 1: Atualiza o tamanho
+        self.tamanho -= 1 
         return True
 
-    # <-- MELHORIA 3: Método especial __str__ para impressão natural
+ 
     def __str__(self):
         """Retorna uma representação em string da lista."""
         if self.esta_vazia():
@@ -93,7 +93,7 @@ class ListaEncadeada:
         return resultado
 
     def imprimir(self):
-        # <-- MELHORIA 3: O método imprimir agora usa o __str__
+        
         print(self)
 
 
@@ -131,7 +131,7 @@ def casos_de_teste():
 
 
 # ===============================
-# MENU INTERATIVO (sem alterações, continua funcionando)
+# MENU INTERATIVO 
 # ===============================
 def menu():
     lista = ListaEncadeada()
@@ -140,7 +140,7 @@ def menu():
     while True:
         limpar_tela()
         print("--- MENU DA LISTA ENCADEADA (VERSÃO OTIMIZADA) ---")
-        print(f"Estado Atual: {lista}\n")  # <-- MELHORIA 3: Usando print(lista)
+        print(f"Estado Atual: {lista}\n") 
         print("1. Verificar se a lista está vazia")
         print("2. Obter tamanho da lista")
         print("3. Obter valor de uma posição")
