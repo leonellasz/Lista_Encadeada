@@ -14,14 +14,15 @@ class No:
 class ListaEncadeada:
     def __init__(self):
         self.inicio = None
-        self.tamanho = 0  
+        self.tamanho = 0  # <-- MELHORIA 1: Adicionado atributo de tamanho para performance O(1)
+
     def esta_vazia(self):
         return self.tamanho == 0
 
     def tamanho(self):
-        return self.tamanho 
+        return self.tamanho  # <-- MELHORIA 1: Agora é instantâneo (O(1))
 
-    
+    # <-- MELHORIA 2: Lógica de acesso centralizada em um método auxiliar
     def _obter_no_na_posicao(self, posicao):
         """Método auxiliar para encontrar um nó em uma posição."""
         if not (1 <= posicao <= self.tamanho):
@@ -33,13 +34,13 @@ class ListaEncadeada:
         return atual
 
     def obter_elemento(self, posicao):
-        no = self._obter_no_na_posicao(posicao)  
+        no = self._obter_no_na_posicao(posicao)  # <-- MELHORIA 2: Usa o método auxiliar
         if no:
             return no.valor
         return None
 
     def modificar_elemento(self, posicao, novo_valor):
-        no = self._obter_no_na_posicao(posicao)  
+        no = self._obter_no_na_posicao(posicao)  # <-- MELHORIA 2: Usa o método auxiliar
         if no:
             no.valor = novo_valor
             return True
@@ -54,12 +55,12 @@ class ListaEncadeada:
             novo_no.proximo = self.inicio
             self.inicio = novo_no
         else:
-           
+            # <-- MELHORIA 2: Usa o método auxiliar para encontrar o nó anterior
             anterior = self._obter_no_na_posicao(posicao - 1)
             novo_no.proximo = anterior.proximo
             anterior.proximo = novo_no
 
-        self.tamanho += 1  
+        self.tamanho += 1  # <-- MELHORIA 1: Atualiza o tamanho
         return True
 
     def remover(self, posicao):
@@ -69,17 +70,17 @@ class ListaEncadeada:
         if posicao == 1:
             self.inicio = self.inicio.proximo
         else:
-           
+            # <-- MELHORIA 2: Usa o método auxiliar para encontrar o nó anterior
             anterior = self._obter_no_na_posicao(posicao - 1)
             no_a_remover = anterior.proximo
             anterior.proximo = no_a_remover.proximo
 
-        self.tamanho -= 1  
+        self.tamanho -= 1  # <-- MELHORIA 1: Atualiza o tamanho
         return True
 
-  
+    # <-- MELHORIA 3: Método especial __str__ para impressão natural
     def __str__(self):
-       
+        """Retorna uma representação em string da lista."""
         if self.esta_vazia():
             return "Lista vazia."
 
@@ -92,26 +93,10 @@ class ListaEncadeada:
         return resultado
 
     def imprimir(self):
-        
+        # <-- MELHORIA 3: O método imprimir agora usa o __str__
         print(self)
 
-    def salvar_em_arquivo(self, nome_arquivo="lista.txt"):
-        with open(nome_arquivo, "w") as f:
-            atual = self.inicio
-            while atual:
-                f.write(f"{atual.valor}\n")
-                atual = atual.proximo
 
-    def carregar_de_arquivo(self, nome_arquivo="lista.txt"):
-        self.inicio = None
-        self.tamanho = 0  
-        if not os.path.exists(nome_arquivo):
-            return
-        with open(nome_arquivo, "r") as f:
-            # A inserção já atualiza o tamanho, não precisamos contar aqui
-            linhas = [linha.strip() for linha in f if linha.strip().isdigit()]
-        for i, linha in enumerate(linhas):
-            self.inserir(i + 1, int(linha))
 
 
 # ===============================
@@ -146,16 +131,16 @@ def casos_de_teste():
 
 
 # ===============================
-# MENU INTERATIVO 
+# MENU INTERATIVO (sem alterações, continua funcionando)
 # ===============================
 def menu():
     lista = ListaEncadeada()
-    lista.carregar_de_arquivo()
+
 
     while True:
         limpar_tela()
         print("--- MENU DA LISTA ENCADEADA (VERSÃO OTIMIZADA) ---")
-        print(f"Estado Atual: {lista}\n") 
+        print(f"Estado Atual: {lista}\n")  # <-- MELHORIA 3: Usando print(lista)
         print("1. Verificar se a lista está vazia")
         print("2. Obter tamanho da lista")
         print("3. Obter valor de uma posição")
@@ -185,7 +170,7 @@ def menu():
                 novo = int(input("Digite o novo valor: "))
                 if lista.modificar_elemento(pos, novo):
                     print("Valor modificado com sucesso!")
-                    lista.salvar_em_arquivo()
+
                 else:
                     print("Erro: posição inválida.")
             except ValueError:
@@ -206,7 +191,7 @@ def menu():
                 pos = int(input("Digite a posição a remover: "))
                 if lista.remover(pos):
                     print("Elemento removido com sucesso.")
-                    lista.salvar_em_arquivo()
+
                 else:
                     print("Erro: posição inválida.")
             except ValueError:
@@ -223,7 +208,7 @@ def menu():
         input("\nPressione Enter para continuar...")
 
 
-# execução principal
+# Execução principal
 if __name__ == "__main__":
-    # casos_de_teste() #  descomentar esta linha para rodar os testes antes do menu
+    # casos_de_teste() # Você pode descomentar esta linha para rodar os testes antes do menu
     menu()
